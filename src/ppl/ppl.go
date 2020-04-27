@@ -16,12 +16,11 @@ type People struct {
 	Quote string `json:"quote"`
 }
 
+//	InitFromFile reads the data.json file and constructs the map, the key of which is a person's name and the value of that key is a quote for that person
 func InitFromFile() map[string]string {
 	var allPeople PeopleList
 
 	absPath, _ := filepath.Abs("../ppl/data.json")
-
-	// fmt.Println("File path: ", absPath)
 
 	jsonFile, err := os.Open(absPath)
 
@@ -39,7 +38,6 @@ func InitFromFile() map[string]string {
 
 	for _, eachPeople := range allPeople.Data {
 		peopleMap[eachPeople.Name] = eachPeople.Quote
-		// fmt.Println("Name: " + eachPeople.Name + ", quote: " + eachPeople.Quote)
 	}
 
 	return peopleMap

@@ -8,8 +8,10 @@ import (
 	"unicode"
 )
 
+//	peopleMap stores the names and quotes of the data.json file.
 var peopleMap map[string]string
 
+// hander handler function that processes the request, checks if that name exists in our data and writes the result.
 func handler(w http.ResponseWriter, r *http.Request) {
 	requestName := r.URL.Path[1:]
 	for index, char := range requestName {
@@ -17,7 +19,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			requestName = requestName[:index] + " " + requestName[index:]
 		}
 	}
-	fmt.Println("URL request name : " + r.URL.Path[1:] + ", processed name: " + requestName)
+	// fmt.Println("URL request name : " + r.URL.Path[1:] + ", processed name: " + requestName)
 	if quote, ok := peopleMap[requestName]; ok {
 		fmt.Fprintf(w, "Quote for %s is: %s", requestName, quote)
 	} else {
@@ -26,6 +28,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+//	main main function that initiates the server
 func main() {
 	peopleMap = ppl.InitFromFile()
 	http.HandleFunc("/", handler)
