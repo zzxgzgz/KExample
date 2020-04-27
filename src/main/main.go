@@ -13,7 +13,11 @@ var peopleMap map[string]string
 
 // hander handler function that processes the request, checks if that name exists in our data and writes the result.
 func handler(w http.ResponseWriter, r *http.Request) {
-	requestName := r.URL.Path[1:]
+	if len(r.URL.Query()["name"]) < 1 {
+		fmt.Fprintf(w, "Please enter something.")
+		return
+	}
+	requestName := r.URL.Query()["name"][0]
 	for index, char := range requestName {
 		if index != 0 && unicode.IsUpper(char) {
 			requestName = requestName[:index] + " " + requestName[index:]
