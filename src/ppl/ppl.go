@@ -36,11 +36,11 @@ func InitFromFile() PeopleData {
 
 	json.Unmarshal(byteValue, &allPeople)
 
-	fmt.Println("All people in the data set: ")
+	// fmt.Println("All people in the data set: ")
 
-	for i := 0; i < len(allPeople.Peoples); i++ {
-		fmt.Println("Name: ", allPeople.Peoples[i].Name)
-		fmt.Println("Quote: ", allPeople.Peoples[i].Quote)
-	}
+	// for i := 0; i < len(allPeople.Peoples); i++ {
+	// 	fmt.Println("Name: ", allPeople.Peoples[i].Name)
+	// 	fmt.Println("Quote: ", allPeople.Peoples[i].Quote)
+	// }
 	return allPeople
 }

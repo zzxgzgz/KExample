@@ -5,20 +5,27 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"unicode"
 )
 
 var allPeoplle ppl.PeopleData
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	var peoplesQuote = "We cannot find it..."
-
-	for _, eachPpl := range allPeoplle.Peoples {
-		if eachPpl.Name == r.URL.Path[1:] {
-			peoplesQuote = eachPpl.Quote
-			break
+	requestName := r.URL.Path[1:]
+	for index, char := range requestName {
+		if index != 0 && unicode.IsUpper(char) {
+			requestName = requestName[:index] + " " + requestName[index:]
 		}
 	}
-	fmt.Fprintf(w, "Quote for %s is: %s", r.URL.Path[1:], peoplesQuote)
+	// fmt.Println("URL request name : " + r.URL.Path[1:] + ", processed name: " + requestName)
+	for _, eachPpl := range allPeoplle.Peoples {
+		if eachPpl.Name == requestName {
+			fmt.Fprintf(w, "Quote for %s is: %s", requestName, eachPpl.Quote)
+			return
+		}
+	}
+	fmt.Fprintf(w, "Sorry, cannot find quote for %s", requestName)
+	return
 }
 
 func main() {
