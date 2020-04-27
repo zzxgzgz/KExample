@@ -24,7 +24,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	fmt.Fprintf(w, "Sorry, cannot find quote for %s", requestName)
+	fmt.Fprintf(w, "Sorry, cannot find quote for '%s'", requestName)
 	return
 }
 

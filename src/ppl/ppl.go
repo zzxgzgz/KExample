@@ -2,7 +2,6 @@ package ppl
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -22,7 +21,7 @@ func InitFromFile() PeopleData {
 
 	absPath, _ := filepath.Abs("../ppl/data.json")
 
-	fmt.Println("File path: ", absPath)
+	// fmt.Println("File path: ", absPath)
 
 	jsonFile, err := os.Open(absPath)
 
