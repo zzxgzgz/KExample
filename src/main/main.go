@@ -8,7 +8,7 @@ import (
 	"unicode"
 )
 
-var allPeoplle ppl.PeopleData
+var peopleMap map[string]string
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	requestName := r.URL.Path[1:]
@@ -17,19 +17,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			requestName = requestName[:index] + " " + requestName[index:]
 		}
 	}
-	// fmt.Println("URL request name : " + r.URL.Path[1:] + ", processed name: " + requestName)
-	for _, eachPpl := range allPeoplle.Peoples {
-		if eachPpl.Name == requestName {
-			fmt.Fprintf(w, "Quote for %s is: %s", requestName, eachPpl.Quote)
-			return
-		}
+	fmt.Println("URL request name : " + r.URL.Path[1:] + ", processed name: " + requestName)
+	if quote, ok := peopleMap[requestName]; ok {
+		fmt.Fprintf(w, "Quote for %s is: %s", requestName, quote)
+	} else {
+		fmt.Fprintf(w, "Sorry, cannot find quote for '%s'", requestName)
 	}
-	fmt.Fprintf(w, "Sorry, cannot find quote for '%s'", requestName)
 	return
 }
 
 func main() {
-	allPeoplle = ppl.InitFromFile()
+	peopleMap = ppl.InitFromFile()
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }

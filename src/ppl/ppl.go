@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 )
 
-type PeopleData struct {
-	Peoples []People `json:"data"`
+type PeopleList struct {
+	Data []People `json:"data"`
 }
 
 type People struct {
@@ -16,8 +16,8 @@ type People struct {
 	Quote string `json:"quote"`
 }
 
-func InitFromFile() PeopleData {
-	var allPeople PeopleData
+func InitFromFile() map[string]string {
+	var allPeople PeopleList
 
 	absPath, _ := filepath.Abs("../ppl/data.json")
 
@@ -35,11 +35,12 @@ func InitFromFile() PeopleData {
 
 	json.Unmarshal(byteValue, &allPeople)
 
-	// fmt.Println("All people in the data set: ")
+	peopleMap := make(map[string]string)
 
-	// for i := 0; i < len(allPeople.Peoples); i++ {
-	// 	fmt.Println("Name: ", allPeople.Peoples[i].Name)
-	// 	fmt.Println("Quote: ", allPeople.Peoples[i].Quote)
-	// }
-	return allPeople
+	for _, eachPeople := range allPeople.Data {
+		peopleMap[eachPeople.Name] = eachPeople.Quote
+		// fmt.Println("Name: " + eachPeople.Name + ", quote: " + eachPeople.Quote)
+	}
+
+	return peopleMap
 }
