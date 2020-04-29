@@ -14,7 +14,7 @@ var peopleMap map[string]string
 // hander handler function that processes the request, checks if that name exists in our data and writes the result.
 func handler(w http.ResponseWriter, r *http.Request) {
 	if len(r.URL.Query()["name"]) < 1 {
-		fmt.Fprintf(w, "Please enter something.")
+		fmt.Fprintf(w, "Please enter something.\n")
 		return
 	}
 	requestName := r.URL.Query()["name"][0]
@@ -25,9 +25,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 	// fmt.Println("URL request name : " + r.URL.Path[1:] + ", processed name: " + requestName)
 	if quote, ok := peopleMap[requestName]; ok {
-		fmt.Fprintf(w, "Quote for %s is: %s", requestName, quote)
+		fmt.Fprintf(w, "Quote for %s is: %s\n", requestName, quote)
 	} else {
-		fmt.Fprintf(w, "Sorry, cannot find quote for '%s'", requestName)
+		fmt.Fprintf(w, "Sorry, cannot find quote for '%s'\n", requestName)
 	}
 	return
 }
