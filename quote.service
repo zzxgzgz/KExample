@@ -1,0 +1,9 @@
+[Unit]
+Description=quote.service
+
+[Service]
+Type=simple
+ExecStart=/home/osboxes/go/KExample/src/main/main
+
+[Install]
+WantedBy=multi-user.target

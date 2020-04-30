@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"fmt"
 )
 
 type PeopleList struct {
@@ -20,8 +21,10 @@ type People struct {
 func InitFromFile() map[string]string {
 	var allPeople PeopleList
 
-	absPath, _ := filepath.Abs("../ppl/data.json")
-
+	absPath, _ := filepath.Abs("/etc/KExample/src/ppl/data.json")
+	pwd, _ := os.Getwd();
+	fmt.Println("Abs path: "+ absPath)
+	fmt.Println("PWD: " + pwd)
 	jsonFile, err := os.Open(absPath)
 
 	defer jsonFile.Close()
